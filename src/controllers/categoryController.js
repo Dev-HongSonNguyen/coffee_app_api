@@ -1,4 +1,5 @@
 import categoryModel from "../models/categoryModel.js";
+import validateCategory from "../schemas/categoryValidate.js";
 export const getOneCategory = async (req, res) => {
   try {
     const category = await categoryModel
@@ -29,6 +30,30 @@ export const getAllCategory = async (req, res) => {
     }
     return res.json({
       message: "Lấy tài nguyên thành công !",
+      category,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+export const createCategory = async (req, res) => {
+  try {
+    const category = await categoryModel.create(req.body);
+    const { error } = validateCategory.validate(req.body);
+    if (error) {
+      return res.status(400).json({
+        message: error.details[0].message,
+      });
+    }
+    if (!category) {
+      return res.json({
+        message: "Thêm tài nguyên thất bại !",
+      });
+    }
+    return res.json({
+      message: "Thêm tài nguyên thành công !",
       category,
     });
   } catch (error) {
