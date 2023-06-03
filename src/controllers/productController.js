@@ -65,6 +65,33 @@ export const createProduct = async (req, res) => {
       });
   }
 };
+export const updateProduct = async(req, res) => {
+    
+  try {
+      const {error} = validateProduct.validate(req.body);
+      if(error){
+          return res.status(400).json({
+              massage: error.details[0].message,
+          })
+      }
+
+      
+      const product = await productModel.findByIdAndUpdate({_id: req.params.id}, req.body, {new: true})
+      if(!product){
+          return res.json({
+              message: "Cập nhật tài nguyên không thành công !"
+          })
+      }
+      return res.json({
+          message: "Cập nhật tài nguyên thành công !",
+          product,
+      })
+  } catch (error) {
+      return res.json(400).json({
+          message: error,
+      })
+  }
+};
 export const deleteProduct = async (req, res) => {
   try {
       const products = await productModel.findByIdAndDelete(req.params.id);
