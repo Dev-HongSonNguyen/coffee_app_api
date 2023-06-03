@@ -62,3 +62,21 @@ export const createCategory = async (req, res) => {
     });
   }
 };
+export const deleteCategory = async (req, res) => {
+  try {
+    const category = await categoryModel.findByIdAndDelete(req.params.id);
+    if (!category) {
+      return res.status(400).json({
+        message: "Xoa tài nguyên thất bại !",
+      });
+    }
+    return res.json({
+      message: "Xóa tài nguyên thành công !",
+      category,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: error.message,
+    });
+  }
+};
