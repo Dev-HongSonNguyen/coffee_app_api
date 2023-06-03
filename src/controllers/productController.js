@@ -65,3 +65,16 @@ export const createProduct = async (req, res) => {
       });
   }
 };
+export const deleteProduct = async (req, res) => {
+  try {
+      const products = await productModel.findByIdAndDelete(req.params.id);
+      return res.json({
+          message: "Xóa tài nguyên thành công !",
+          products,
+      });
+  } catch (error) {
+      return res.status(400).json({
+          message: error,
+      });
+  }
+};
