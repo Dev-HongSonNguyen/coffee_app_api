@@ -22,6 +22,25 @@ export const getAllProduct = async (req, res) => {
     });
   }
 };
+export const getOneProduct = async(req, res) => {
+  try {
+      const product = await productModel.findById(req.params.id).populate("categoryId")
+      
+      if(!product){
+          return res.json({
+              message: "Lấy tài nguyên thất bại !",
+          });
+      }
+      return res.json({
+          message: "Lấy tài nguyên thành công !",
+          product,
+      })
+  } catch (error) {
+      return res.status(400).json({
+          message: error,
+      });
+  }
+};
 export const createProduct = async (req, res) => {
   try {
       const { error } = validateProduct.validate(req.body);
