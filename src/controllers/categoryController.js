@@ -80,3 +80,33 @@ export const deleteCategory = async (req, res) => {
     });
   }
 };
+export const updateCategory = async (req, res) => {
+  try {
+    const category = await categoryModel.findOneAndUpdate(
+      { _id: req.params.id },
+      req.body,
+      {
+        new: true,
+      }
+    );
+    const { error } = validateCategory.validate(req.body);
+    if (error) {
+      return res.status(400).json({
+        message: error.details[0].message,
+      });
+    }
+    if (!category) {
+      return res.json({
+        message: "Update tài nguyên không thành công !",
+      });
+    }
+    return res.json({
+      message: "Update tài nguyên thành công !",
+      category,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: error.message,
+    });
+  }
+};
