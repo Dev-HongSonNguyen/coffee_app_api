@@ -2,14 +2,16 @@ import express from "express";
 import morgan from "morgan";
 import * as dotenv from "dotenv";
 import mongoose from "mongoose";
+import cors from "cors";
 import categoryRoute from "./src/routes/categoryRoute.js";
 import productRoute from "./src/routes/productRoute.js";
-import authRoute from "./src/routes/authRouter.js"
+import authRoute from "./src/routes/authRouter.js";
 dotenv.config();
 const app = express();
 const port = process.env.PORT;
 app.use(express.json());
 app.use(morgan("tiny"));
+app.use(cors());
 app.use(categoryRoute);
 app.use(productRoute);
 app.use(authRoute);
