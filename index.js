@@ -7,6 +7,7 @@ import categoryRoute from "./src/routes/categoryRoute.js";
 import productRoute from "./src/routes/productRoute.js";
 import postRoute from "./src/routes/postRouter.js";
 import authRoute from "./src/routes/authRouter.js";
+import uploadRoute from "./src/routes/uploadRouter.js";
 dotenv.config();
 const app = express();
 const port = process.env.PORT;
@@ -17,6 +18,7 @@ app.use(categoryRoute);
 app.use(productRoute);
 app.use(postRoute);
 app.use(authRoute);
+app.use(uploadRoute);
 mongoose
   .connect(
     "mongodb+srv://nguyenhongson20433:9gjfX7VDs7Z9XzK1@cluster0.cnb4wcl.mongodb.net/?retryWrites=true&w=majority"
