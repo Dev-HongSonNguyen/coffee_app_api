@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import categoryRoute from "./src/routes/categoryRoute.js";
 import productRoute from "./src/routes/productRoute.js";
+import postRoute from "./src/routes/postRouter.js";
 import authRoute from "./src/routes/authRouter.js";
 dotenv.config();
 const app = express();
@@ -14,6 +15,7 @@ app.use(morgan("tiny"));
 app.use(cors());
 app.use(categoryRoute);
 app.use(productRoute);
+app.use(postRoute);
 app.use(authRoute);
 mongoose
   .connect(
