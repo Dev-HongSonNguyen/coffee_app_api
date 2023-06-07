@@ -85,4 +85,16 @@ export const updatePost = async (req, res) => {
     })
   }
 };
-
+export const deletePost = async (req, res) => {
+  try {
+    const post = await postModel.findByIdAndDelete(req.params.id);
+    return res.json({
+      message: "Xóa tài nguyên thành công !",
+      post,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: error,
+    });
+  }
+};
