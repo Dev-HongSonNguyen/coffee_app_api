@@ -12,14 +12,12 @@ export const signupSchema = joi.object({
         "string.empty": "Email không được để trống !",
         "any.required": "Trường Email là bắt buộc !",
     }),
-
     password: joi.string().required().min(6).messages({
         "string.base": "password phải là kiểu chữ !",
         "string.min": "Password phải có ít nhất {#limit} ký tự !",
         "string.empty": "Password không được để trống !",
         "any.required": "Trường Password là bắt buộc !",
     }),
-
     confirmPassword: joi.string().valid(joi.ref("password")).required().messages({
         "any.required": "Trường confirmPassword là bắt buộc !",
         "any.only": "Password không khớp !",
