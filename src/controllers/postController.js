@@ -18,7 +18,24 @@ export const getOnePost = async(req, res) => {
       });
   }
 };
-
+export const getAllPost = async (req, res) => {
+    try {
+      const post = await postModel.find()
+      if (!post) {
+        return res.status(404).json({
+          message: "Lấy tài nguyên thất bại !",
+        });
+      }
+      return res.json({
+        message: "Lấy tài nguyên thành công !",
+        post,
+      });
+    } catch (error) {
+      return res.status(400).json({
+        message: error.message,
+      });
+    }
+  };
 export const updatePost = async(req, res) => {
     
     try {
