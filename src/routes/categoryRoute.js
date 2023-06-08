@@ -6,6 +6,7 @@ import {
   getOneCategory,
   updateCategory,
 } from "../controllers/categoryController.js";
+import { checkPermission } from "../middlewares/checkPermission.js";
 const router = express.Router();
 router.get("/categories", getAllCategory);
 router.get("/categories/:id", getOneCategory);
