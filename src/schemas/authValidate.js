@@ -23,3 +23,19 @@ export const signupSchema = joi.object({
         "any.only": "Password không khớp !",
     })
 });
+
+export const signInSchema = joi.object({
+    email: joi.string().email().required().messages({
+        "string.base": "Email phải là kiểu chữ",
+        "string.email": "Email không đúng định dạng ",
+        "string.empty": "Email không được để trống",
+        "any.required": "Trường Email là bắt buộc",
+    }),
+
+    password: joi.string().required().messages({
+        "string.base": `"password" phải la kiểu chữ`,
+        "string.min": "Password phải có ít nhất {#limit} ký tự",
+        "string.empty": "Password không được để trống",
+        "any.required": "Trường Password là bắt buộc",
+    })
+})
