@@ -79,7 +79,7 @@ export const signin = async (req, res) => {
 
     if (!hashedPassword) {
       return res.status(400).json({
-        message: "Mật khẩu đúng !",
+        message: "Mật khẩu không chính xác !",
       });
     }
 
