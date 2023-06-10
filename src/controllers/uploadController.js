@@ -1,44 +1,33 @@
 import cloudinary from "../config/cloudinary.js";
 
-export const uploadImage = (req, res) => {
-  // Lấy đường dẫn tạm thời của file đã tải lên
-  const filePath = req.file.path;
-  // Sử dụng Cloudinary để tải lên file từ đường dẫn tạm thời
-  cloudinary.uploader.upload(filePath, (err, result) => {
-    if (err) {
-      console.error("Error uploading image:", err);
-      return res.status(500).json({ error: "Upload failed" });
+const uploadImage = async (req, res) => {
+  const images = req.files.map((file) => file.path);
+
+  const uploadedImages = [];
+  for (const image of images) {
+    try {
+      const result = await cloudinary.uploader.upload(image);
+      uploadedImages.push({
+        url: result.secure_url,
+        publicId: result.public_id,
+      });
+    } catch (error) {
+      res.send({
+        message: error,
+      });
     }
-    // Trả về URL công khai của ảnh đã tải lên
-    res.json({
-      imageUrl: result.secure_url,
-      message: "Upload hình ảnh thành công !",
-    });
-  });
+  }
+  return res.json({ urls: uploadedImages });
 };
-export const updateImage = (req, res) => {
-  // Lấy ID của ảnh cần cập nhật
-  const imageId = req.params.id;
-  // Cập nhật thông tin ảnh trong Cloudinary
-  cloudinary.uploader.rename(imageId, { tags: "updated" }, (err, result) => {
-    if (err) {
-      console.error("Error updating image:", err);
-      return res.status(500).json({ error: "Update failed" });
-    }
-    // Trả về kết quả cập nhật
-    res.json({ message: "Update hình ảnh thành công !" });
-  });
+
+const deleteImage = async (req, res) => {
+  const publicId = req.params.publicId;
+  try {
+    const result = await cloudinary.uploader.destroy(publicId);
+    res.status(200).json({ message: "Xóa ảnh thành công", result });
+  } catch (error) {
+    res.status(500).json({ error: "Error deleting image" });
+  }
 };
-export const deleteImage = (req, res) => {
-  // Lấy ID của ảnh cần xóa
-  const imageId = req.params.id;
-  // Xóa ảnh trong Cloudinary
-  cloudinary.uploader.destroy(imageId, (err, result) => {
-    if (err) {
-      console.error("Error deleting image:", err);
-      return res.status(500).json({ error: "Xóa hình ảnh thất bại !" });
-    }
-    // Trả về kết quả xóa
-    res.json({ message: "Xóa hình ảnh thành công !" });
-  });
-};
+
+export { uploadImage, deleteImage };
