@@ -1,4 +1,5 @@
 import productModel from "../models/productModel.js";
+import categoryModel from "../models/categoryModel.js";
 import validateProduct from "../schemas/productValidate.js";
 export const getAllProduct = async (req, res) => {
   const { _limit = 10, _sort, _order } = req.query;
@@ -58,6 +59,9 @@ export const createProduct = async (req, res) => {
       });
     }
     const products = await productModel.create(req.body);
+    await categoryModel.findByIdAndUpdate(products.categoryId, {
+      $addToSet: { products: products._id },
+    });
     if (!products) {
       return res.json({
         message: "Thêm tài nguyên không thành công !",
