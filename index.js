@@ -8,6 +8,7 @@ import productRoute from "./src/routes/productRoute.js";
 import postRoute from "./src/routes/postRouter.js";
 import authRoute from "./src/routes/authRouter.js";
 import uploadRoute from "./src/routes/uploadRouter.js";
+import cartRoute from "./src/routes/cartRouter.js";
 import sliderRouter from "./src/routes/sliderRouter.js";
 dotenv.config();
 const app = express();
@@ -20,6 +21,8 @@ app.use(productRoute);
 app.use(postRoute);
 app.use(authRoute);
 app.use(uploadRoute);
+app.use(cartRoute);
+
 app.use(sliderRouter);
 mongoose
   .connect(
