@@ -10,6 +10,7 @@ import authRoute from "./src/routes/authRouter.js";
 import uploadRoute from "./src/routes/uploadRouter.js";
 import cartRoute from "./src/routes/cartRouter.js";
 import sliderRouter from "./src/routes/sliderRouter.js";
+import saleRouter from "./src/routes/saleRouter.js"
 dotenv.config();
 const app = express();
 const port = process.env.PORT;
@@ -23,6 +24,7 @@ app.use(authRoute);
 app.use(uploadRoute);
 app.use(cartRoute);
 
+app.use(saleRouter)
 app.use(sliderRouter);
 mongoose
   .connect(
